@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,52 +26,48 @@ public class InvestmentController {
 	private String name;
 	@Autowired
 	private InvestmentService investmentService;
-@PostMapping("/")
-public InvestmentDTO makeInvestment(@RequestBody InvestmentDTO investmentDTO)
-{
-	InvestmentDTO investmentDTO2=investmentService.makeInvestment(investmentDTO);
-	return investmentDTO2;
-}
 
-@PutMapping("/{investmentId}")
-public InvestmentDTO updateInvestmentDTO(@PathVariable Long investmentId,@RequestBody InvestmentDTO investmentDTO)
-{
-	InvestmentDTO investmentDTO2=investmentService.updateInvestment(investmentId,investmentDTO);
+	@PostMapping("/")
+	public InvestmentDTO makeInvestment(@RequestBody InvestmentDTO investmentDTO) {
+		InvestmentDTO investmentDTO2 = investmentService.makeInvestment(investmentDTO);
+		return investmentDTO2;
+	}
 
-	return investmentDTO2;
-}
+	@PutMapping("/{investmentId}")
+	public InvestmentDTO updateInvestmentDTO(@PathVariable Long investmentId,
+			@RequestBody InvestmentDTO investmentDTO) {
+		InvestmentDTO investmentDTO2 = investmentService.updateInvestment(investmentId, investmentDTO);
 
-@DeleteMapping("/{investmentId}")
-public void deleteInvestment(@PathVariable Long investmentId)
-{
-	investmentService.deleteInvestment(investmentId);
-	
-}
+		return investmentDTO2;
+	}
 
-@GetMapping("/{investmentId}")
-public InvestmentDTO getbyId(@PathVariable Long investmentId)
-{
-	InvestmentDTO investmentDTO2=investmentService.getInvestmentById(investmentId);
-	return investmentDTO2;
-}
+	@DeleteMapping("/{investmentId}")
+	public boolean deleteInvestment(@PathVariable Long investmentId) {
+		return investmentService.deleteInvestment(investmentId);
 
-@GetMapping("/project/{projectId}")
-public List<InvestmentDTO> getbyprojectid(@PathVariable Long projectId)
-{
-	List<InvestmentDTO> investmentDTOs=investmentService.getInvestmentsByProjectId(projectId);
-	return investmentDTOs;
-}
+	}
 
-@GetMapping("/investor/{investmentName}")
-public List<InvestmentDTO> getbyprojectBYName(@PathVariable String investmentName)
-{
-	List<InvestmentDTO> investmentDTOs=investmentService.getInvestmentsByInvestorName(investmentName);
-	return investmentDTOs;
-}
+	@GetMapping("/{investmentId}")
+	public InvestmentDTO getbyId(@PathVariable Long investmentId) {
+		InvestmentDTO investmentDTO2 = investmentService.getInvestmentById(investmentId);
+		return investmentDTO2;
+	}
 
-@GetMapping("/profile")
-public String getProfile(){
-	return this.name;
-}
+	@GetMapping("/project/{projectId}")
+	public List<InvestmentDTO> getbyprojectid(@PathVariable Long projectId) {
+		List<InvestmentDTO> investmentDTOs = investmentService.getInvestmentsByProjectId(projectId);
+		return investmentDTOs;
+	}
+
+	@GetMapping("/investor/{investmentName}")
+	public List<InvestmentDTO> getbyprojectBYName(@PathVariable String investmentName) {
+		List<InvestmentDTO> investmentDTOs = investmentService.getInvestmentsByInvestorName(investmentName);
+		return investmentDTOs;
+	}
+
+	@GetMapping("/profile")
+	public String getProfile() {
+		return this.name;
+	}
 
 }

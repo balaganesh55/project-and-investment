@@ -84,6 +84,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<ProjectDTO> getAllProjects() {
+		
 		List<ProjectDTO> list = projectRepository.findAll().stream()
 				.map(project -> modelMapper.map(project, ProjectDTO.class))
 				.toList();

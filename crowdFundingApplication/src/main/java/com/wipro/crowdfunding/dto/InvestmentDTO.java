@@ -13,6 +13,7 @@ public class InvestmentDTO {
 	@DecimalMin(value = "1.0", inclusive = false)
 	private Double amount;
 	@NotBlank(message = "not empty")
+	@NotNull(message = "name should not be null")
 	@Size(min = 1, max = 255, message = "Name should be proper")
 	private String investorName;
 	@NotNull(message = "Not null")

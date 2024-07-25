@@ -16,7 +16,7 @@ public class RestExceptionHandler {
 
 	// Other exception handlers...
 	@ExceptionHandler(InvalidDataException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleInvalidDataException(InvalidDataException ex) {
 		return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
 	}
