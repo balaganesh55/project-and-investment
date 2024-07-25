@@ -9,7 +9,7 @@ public class InvestmentDTO {
 
 	private Long id;
 	@NotNull(message = "Amount should not be null")
-	//@NotNull(message=throw new InvalidDataException("Amount should not be null"))
+	
 	@DecimalMin(value = "1.0", inclusive = false)
 	private Double amount;
 	@NotBlank(message = "not empty")

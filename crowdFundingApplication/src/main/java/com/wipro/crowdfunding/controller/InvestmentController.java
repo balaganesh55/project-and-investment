@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wipro.crowdfunding.dto.InvestmentDTO;
 import com.wipro.crowdfunding.service.InvestmentService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/investments")
 public class InvestmentController {
@@ -28,14 +28,14 @@ public class InvestmentController {
 	private InvestmentService investmentService;
 
 	@PostMapping("/")
-	public InvestmentDTO makeInvestment(@RequestBody InvestmentDTO investmentDTO) {
+	public InvestmentDTO makeInvestment(@Valid @RequestBody InvestmentDTO investmentDTO) {
 		InvestmentDTO investmentDTO2 = investmentService.makeInvestment(investmentDTO);
 		return investmentDTO2;
 	}
 
 	@PutMapping("/{investmentId}")
 	public InvestmentDTO updateInvestmentDTO(@PathVariable Long investmentId,
-			@RequestBody InvestmentDTO investmentDTO) {
+			@Valid @RequestBody InvestmentDTO investmentDTO) {
 		InvestmentDTO investmentDTO2 = investmentService.updateInvestment(investmentId, investmentDTO);
 
 		return investmentDTO2;
