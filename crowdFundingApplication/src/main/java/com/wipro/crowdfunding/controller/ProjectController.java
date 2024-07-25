@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wipro.crowdfunding.dto.ProjectDTO;
 import com.wipro.crowdfunding.service.ProjectService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
@@ -23,7 +25,7 @@ public class ProjectController {
 	private ProjectService projectService;
 
 	@PostMapping("/")
-public ProjectDTO makeInvestment(@RequestBody  ProjectDTO  projectDTO)
+public ProjectDTO makeInvestment(@Valid @RequestBody  ProjectDTO  projectDTO)
 {
 		System.out.println("projectcontroller   "+projectDTO);
 	ProjectDTO investmentDTO2= projectService.createProject(projectDTO);
@@ -31,7 +33,7 @@ public ProjectDTO makeInvestment(@RequestBody  ProjectDTO  projectDTO)
 }
 
 @PutMapping("/{projectId}")
-public ProjectDTO upadProjectDTO(@PathVariable Long projectId,@RequestBody ProjectDTO projectDTO)
+public ProjectDTO upadProjectDTO(@PathVariable Long projectId,@Valid @RequestBody ProjectDTO projectDTO)
 {
    ProjectDTO project=projectService.updateProject(projectId, projectDTO);
    return project;
