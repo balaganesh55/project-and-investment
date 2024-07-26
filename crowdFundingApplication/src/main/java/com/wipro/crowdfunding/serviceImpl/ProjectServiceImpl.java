@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wipro.crowdfunding.Exception.ResourceNotFoundException;
+import com.wipro.crowdfunding.dto.InvestmentDTO;
 import com.wipro.crowdfunding.dto.ProjectDTO;
+import com.wipro.crowdfunding.entity.Investment;
 import com.wipro.crowdfunding.entity.Project;
 import com.wipro.crowdfunding.repo.ProjectRepository;
 import com.wipro.crowdfunding.service.ProjectService;
@@ -23,7 +25,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public ProjectDTO createProject(ProjectDTO projectDTO) {
 		// write your logic here
-		System.out.println("project   "+projectDTO);
+		List<InvestmentDTO> list = projectDTO.getInvestments();
+		for (InvestmentDTO b : list) {
+			double aRaised = 0;
+			aRaised += b.getAmount();
+			projectDTO.setAmountRaised(aRaised);
+			return projectDTO;
+		}
 		Project project = modelMapper.map(projectDTO, Project.class);
 
 		Project project1 = projectRepository.save(project);
@@ -74,6 +82,13 @@ public class ProjectServiceImpl implements ProjectService {
 		Optional<Project> project1 = projectRepository.findById(projectId);
 		if (project1.isPresent()) {
 			Project project2 = project1.get();
+			List<Investment> list=project2.getInvestments();
+			double aRaised = 0;
+			for (Investment b : list) {
+				aRaised += b.getAmount();		
+			}
+			project2.setAmountRaised(aRaised);
+			
 			return modelMapper.map(project2, ProjectDTO.class);
 
 		} else {
@@ -84,10 +99,9 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<ProjectDTO> getAllProjects() {
-		
+
 		List<ProjectDTO> list = projectRepository.findAll().stream()
-				.map(project -> modelMapper.map(project, ProjectDTO.class))
-				.toList();
+				.map(project -> modelMapper.map(project, ProjectDTO.class)).toList();
 		return list;
 
 	}
